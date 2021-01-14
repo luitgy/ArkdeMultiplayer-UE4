@@ -8,6 +8,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "AbilitySystemComponent.h"
+#include "GameplayAbility/ACM_AttributeSet.h"
+#include "GameplayAbility/ACM_GameplayAbility.h"
+#include "ArkdeCM/ArkdeCM.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AArkdeCMCharacter
@@ -45,6 +49,53 @@ AArkdeCMCharacter::AArkdeCMCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("Ability System Component"));
+
+	AttributeSet = CreateDefaultSubobject<UACM_AttributeSet>(TEXT("Attribute Set"));
+
+}
+
+void AArkdeCMCharacter::BeginPlay()
+{
+
+	Super::BeginPlay();
+
+	if (IsValid(AbilitySystemComponent))
+	{
+
+		for (TSubclassOf<UACM_GameplayAbility>& CurrentAbility : StartingAbilitties)
+		{
+
+			if (IsValid(CurrentAbility))
+			{
+
+				UACM_GameplayAbility* DefaultObj = CurrentAbility->GetDefaultObject<UACM_GameplayAbility>();
+
+				FGameplayAbilitySpec AbilitySpec(DefaultObj, 1, static_cast<int32>(DefaultObj->AbilityInputID), this);
+
+				AbilitySystemComponent->GiveAbility(AbilitySpec);
+
+			}
+
+		}
+
+		AbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+	}
+
+}
+
+void AArkdeCMCharacter::PossessedBy(AController* NewController)
+{
+
+	Super::PossessedBy(NewController);
+
+	if (IsValid(AbilitySystemComponent))
+	{
+		AbilitySystemComponent->RefreshAbilityActorInfo();
+	}
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -74,8 +125,25 @@ void AArkdeCMCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AArkdeCMCharacter::OnResetVR);
+
+	// Setup ASC Input bindings
+	AbilitySystemComponent->BindAbilityActivationToInputComponent(
+		PlayerInputComponent,
+			FGameplayAbilityInputBinds(
+				"Confirm",
+				"Cancel",
+				"EACM_AbilityInputID",
+				static_cast<int32>(EACM_AbilityInputID::Confirm),
+				static_cast<int32>(EACM_AbilityInputID::Cancel)
+			)
+		);
+
 }
 
+UAbilitySystemComponent * AArkdeCMCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
 
 void AArkdeCMCharacter::OnResetVR()
 {
