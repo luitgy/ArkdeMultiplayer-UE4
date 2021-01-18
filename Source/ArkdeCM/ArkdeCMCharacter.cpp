@@ -13,7 +13,7 @@
 #include "GameplayAbility/ACM_GameplayAbility.h"
 #include "ArkdeCM/ArkdeCM.h"
 
-//////////////////////////////////////////////////////////////////////////
+//=========================================================================================================================================================
 // AArkdeCMCharacter
 
 AArkdeCMCharacter::AArkdeCMCharacter()
@@ -56,6 +56,7 @@ AArkdeCMCharacter::AArkdeCMCharacter()
 
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::BeginPlay()
 {
 
@@ -86,6 +87,7 @@ void AArkdeCMCharacter::BeginPlay()
 
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::PossessedBy(AController* NewController)
 {
 
@@ -98,7 +100,7 @@ void AArkdeCMCharacter::PossessedBy(AController* NewController)
 
 }
 
-//////////////////////////////////////////////////////////////////////////
+//=========================================================================================================================================================
 // Input
 
 void AArkdeCMCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -140,38 +142,45 @@ void AArkdeCMCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 }
 
+//=========================================================================================================================================================
 UAbilitySystemComponent * AArkdeCMCharacter::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 		Jump();
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 		StopJumping();
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
@@ -186,6 +195,7 @@ void AArkdeCMCharacter::MoveForward(float Value)
 	}
 }
 
+//=========================================================================================================================================================
 void AArkdeCMCharacter::MoveRight(float Value)
 {
 	if ( (Controller != NULL) && (Value != 0.0f) )

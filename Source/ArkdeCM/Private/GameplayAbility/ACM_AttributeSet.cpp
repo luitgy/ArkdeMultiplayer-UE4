@@ -4,6 +4,7 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectExtension.h"
 
+//=========================================================================================================================================================
 UACM_AttributeSet::UACM_AttributeSet()
 {
 
@@ -21,6 +22,7 @@ UACM_AttributeSet::UACM_AttributeSet()
 
 }
 
+//=========================================================================================================================================================
 void UACM_AttributeSet::PreAttributeChange(const FGameplayAttribute & Attribute, float & NewValue)
 {
 
@@ -41,6 +43,7 @@ void UACM_AttributeSet::PreAttributeChange(const FGameplayAttribute & Attribute,
 
 }
 
+//=========================================================================================================================================================
 void UACM_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData & Data)
 {
 
@@ -68,6 +71,7 @@ void UACM_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 }
 
+//=========================================================================================================================================================
 void UACM_AttributeSet::AdjustAttributeForMaxChange(FGameplayAttributeData & AffectedAttribute, const FGameplayAttributeData & MaxAttribute, float NewMaxValue, const FGameplayAttribute & AffectedAttributeProperty)
 {
 

@@ -78,7 +78,7 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
-	/* Gameplay Ability System START */
+	/* ----- Gameplay Ability System START ----- */
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Gameplay Ability System")
 	UAbilitySystemComponent* AbilitySystemComponent;
@@ -92,7 +92,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay Ability System")
 	TArray<TSubclassOf<UACM_GameplayAbility>> StartingAbilitties;
 
-	/* Gameplay Ability System END */
+	/* ----- Gameplay Ability System END ----- */
 
 };
 
