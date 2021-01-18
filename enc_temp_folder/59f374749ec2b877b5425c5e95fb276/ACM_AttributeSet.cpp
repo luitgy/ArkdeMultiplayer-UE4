@@ -52,7 +52,6 @@ void UACM_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	
 		Health.SetCurrentValue(FMath::Clamp(Health.GetCurrentValue(), 0.0f, MaxHealth.GetCurrentValue()));
 		Health.SetBaseValue(FMath::Clamp(Health.GetBaseValue(), 0.0f, MaxHealth.GetCurrentValue()));
-		UE_LOG(LogTemp, Warning, TEXT("Health Changed: %f"), Health.GetCurrentValue());
 
 	}
 	else if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<FProperty>(UACM_AttributeSet::StaticClass(), GET_MEMBER_NAME_CHECKED(UACM_AttributeSet, Mana)))
@@ -60,7 +59,6 @@ void UACM_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 		Mana.SetCurrentValue(FMath::Clamp(Mana.GetCurrentValue(), 0.0f, MaxMana.GetCurrentValue()));
 		Mana.SetBaseValue(FMath::Clamp(Mana.GetBaseValue(), 0.0f, MaxMana.GetCurrentValue()));
-		UE_LOG(LogTemp, Warning, TEXT("Mana Changed: %f"), Mana.GetCurrentValue());
 
 	}
 	else if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<FProperty>(UACM_AttributeSet::StaticClass(), GET_MEMBER_NAME_CHECKED(UACM_AttributeSet, Stamina)))
